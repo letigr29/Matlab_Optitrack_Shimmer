@@ -1,7 +1,7 @@
 % funcion para calcular la matriz de alineacion de med_imu referido a
 % med_cam
 
-function [Rb]= matriz_ali(med_cal)
+function [matriz_ali]= matriz_ali(med_cal)
 
    
 p1=med_cal.Rigid_Body_Marker.RigidBody_Marker1.Position;
