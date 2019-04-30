@@ -1,7 +1,7 @@
 % funcion para calcular la matriz de alineacion de med_imu referido a
 % med_cam
 
-function [Rb0,Rb]= matriz_ali(med_imu,med_cam)
+function [matriz_ali]= matriz_ali(med_cal)
 
     % variables
     num_imus= length(med_imu);
@@ -18,13 +18,11 @@ function [Rb0,Rb]= matriz_ali(med_imu,med_cam)
         B1=quat2dcm(med_imu{n}.Quat);
 %         B2=quat2dcm(med_imu{n}.Quat(2000,:));
         
-%         C=[0 0 1; 0 1 0; -1 0 0];
+        C=[0 0 1; 0 1 0; -1 0 0];
         
-        for t=500:1000%1:length(med_imu{n}.Quat)-1
-            med0(:,:,t)=(A1(:,:,t)*A1(:,:,t+1)*inv(B1(:,:,t))*inv(B1(:,:,t+1)))^(1/2);
-            med(:,:,t)=inv(A1(:,:,t))*med0(:,:,t)*B1(:,:,t);
+        for t=1:length(med_imu{n}.Quat)
+            med(:,:,t)=A1(:,:,t)*inv(C)*inv(B1(:,:,t));
         end
-        Rb0=mean(med0,3);
         Rb=mean(med,3);
 %         m_ali{n}=eul2quat(m{n},'XYZ')
     end
