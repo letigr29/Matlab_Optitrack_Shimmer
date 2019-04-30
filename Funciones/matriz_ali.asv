@@ -7,6 +7,7 @@ function [matriz_ali0,matriz_ali]= matriz_ali(med_cal,m_imu,instante)
 p1=med_cal.Rigid_Body_Marker.RigidBody_Marker1.Position;
 p2=med_cal.Rigid_Body_Marker.RigidBody_Marker2.Position;
 p3=med_cal.Rigid_Body_Marker.RigidBody_Marker3.Position;  
+RB=med_cal.Rigid_Body.RigidBody.Position;
 
 P1=mean(p1);
 P2=mean(p2);
@@ -59,5 +60,5 @@ bz=bz/norm(bz);
 
 matriz_ali0=[bx',by',bz'];
 
-matriz_ali=(matriz_ali0)*(quat2dcm(m_imu{1}.Quat(instante,:)))';
+matriz_ali=(quat2dcm(m_imu{1}.Quat(instante,:)))*(matriz_ali0);
 end
