@@ -11,33 +11,14 @@ plot_camara_imu_2D(med_cam,{med_imu});
 med_imu_s=sincronizar_imus(med_cam,{med_imu},1);
 plot_camara_imu_2D(med_cam,med_imu_s);
 %%
-med_imu_s=sincronizar_imus(med_cam,{med_imu},4769-929);
+med_imu_s=sincronizar_imus(med_cam,{med_imu},4768-950);
+%02-05-2019: 5804-911
+
 plot_camara_imu_2D(med_cam,med_imu_s);
 %%
 
-[m_ali0,m_ali]=matriz_ali(med_cal,med_imu_s,1);
-
+med_imu_s=transformacion_quaterniones(med_imu_s)
 %%
 
-plot_camara_imu_3D(med_cam,med_imu_s) 
-% RB= m_ali
-%%
-
-% med_imu_s{1}.euler2quat=eul2quat(unwrap(quat2eul(med_imu_s{1}.Quat)));
-for t=1:length(med_imu_s{1}.Quat)
-    med_imu_s{1}.euler2quat(t,:)=unwrap(dcm2quat(quat2dcm(med_imu_s{1}.Quat(t,:))*m_ali));
-end
-
- [pitch, roll, yaw]=quat2angle( med_imu_s{1}.euler2quat,'XYZ');
-med_imu_s{1}.angle=unwrap([pitch, roll, yaw]);
-
- [pitch, roll, yaw]=quat2angle( med_cam.Rigid_Body.RigidBody.Rotation,'XYZ');
-med_cam.Rigid_Body.RigidBody.angle=unwrap([pitch, roll, yaw]);
-% med_cam.Rigid_Body.RigidBody.euler2quat=eul2quat(unwrap(quat2eul( med_cam.Rigid_Body.RigidBody.Rotation)));
-
-for t=1:length(med_cam.Rigid_Body.RigidBody.Rotation)
-    med_cam.Rigid_Body.RigidBody.euler2quat(t,:)=dcm2quat(quat2dcm(med_cam.Rigid_Body.RigidBody.Rotation(t,:)));
-end
-%%
 plot_camara_imu_2D(med_cam,med_imu_s);
 

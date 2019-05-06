@@ -1,7 +1,7 @@
 % funcion para calcular la matriz de alineacion de med_imu referido a
 % med_cam
 
-function [matriz_ali0,matriz_ali]= matriz_ali(med_cal,m_imu,instante)
+function [matriz_ali0,matriz_ali]= matriz_cambio_base(med_cal,m_imu,instante)
 
    
 p1=med_cal.Rigid_Body_Marker.RigidBody_Marker1.Position;
@@ -59,5 +59,5 @@ bz=bz/norm(bz);
 
 matriz_ali0=[bx',by',bz'];
 
-matriz_ali=(matriz_ali0)*(quat2dcm(m_imu{1}.Quat(instante,:)))';
+matriz_ali=(matriz_ali0)*(quat2dcm(m_imu.Quat(instante,:)))';
 end
