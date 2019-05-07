@@ -16,10 +16,13 @@ med_imu_s=sincronizar_imus(med_cam,{med_imu},4768-950);
 
 plot_camara_imu_2D(med_cam,med_imu_s);
 %% calculo y aplicacion cambio de base entre espacios de camara y sensores imu
+[mcb0,mcb1]=matriz_cambio_base(med_cal,med_imu_s{1},3000);
 
-[mcb0,mcb1]=matriz_cambio_base(med_cal,med_imu_s{1},100);
-med_imu_s{1}=transformacion_quaterniones(med_imu_s{1},mcb0,mcb1)
+med_imu_s{1}=transformacion_cuaterniones(med_imu_s{1},mcb0,mcb1)
+
 %%
-
+% 
+% sincronizar(med_cam,med_imu_s{1},1);
+%%
 plot_camara_imu_2D(med_cam,med_imu_s);
 

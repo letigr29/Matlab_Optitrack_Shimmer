@@ -5,7 +5,6 @@
 function [med_imu_s]= sincronizar_imus(med_cam,med_imu,init_)
 
    
-    
     % variables
     num_imus= length(med_imu);
     clear nombres_imus;
@@ -35,6 +34,5 @@ function [med_imu_s]= sincronizar_imus(med_cam,med_imu,init_)
         med_imu_s{n}.tiempo=TS.Time(init(n):end,:);
         
     end
-    
-    
+  
 end
