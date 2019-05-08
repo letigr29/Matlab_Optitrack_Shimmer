@@ -1,20 +1,20 @@
 
 % function [imus_calibrados]= calibracion_shimmer(imus)
-%
+
 % Funcion para la aplicacion de las matrices de calibracion para los
 % sensores shimmer BFED, D54E y CE9F. El valor de las matrices es fijo y
 % solo se podra cambiar editanto el codigo fuente de la función.
-%
-% Ej: imus_calibrados = calibracion_shimmer({imu1, imu2, imu3})
-%
+
+% Ej: imus_calibrados= calibracion_shimmer({imu1, imu2, imu3})
+
 % Calculo de los datos calibrados:
 %  c = inv(Rx)*inv(Kx)*(ux-bx)
-%    
-    %   c = 3x1 vector de señal calibrada
-    %   Rx = 3x3 matriz de alineacion
-    %   Kx = 3x3 matriz de sensibilidad
-    %   ux = 3x1 vector de señal no calibrada
-    %   bx = 3x1 vector offset
+    
+    %  c = 3x1 vector de señal calibrada
+    % Rx = 3x3 matriz de alineacion
+    % Kx = 3x3 matriz de sensibilidad
+    % ux = 3x1 vector de señal no calibrada
+    % bx = 3x1 vector offset
 
 function [imus_calibrados]= calibracion_shimmer(imus)
 

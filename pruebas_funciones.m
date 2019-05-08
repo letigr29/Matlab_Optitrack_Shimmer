@@ -2,7 +2,7 @@
 addpath('Funciones\')
 med_cal=cargar_datos_camara('G:\Mi unidad\Universidad\Doctorado\Mediciones\Datos optitrack\30-04-2019\calibracion.csv');
 med_cam=cargar_datos_camara('G:\Mi unidad\Universidad\Doctorado\Mediciones\Datos optitrack\30-04-2019\Take 2019-04-30 12.17.32 PM.csv');
-med_imu=cargar_datos_shimmer('G:\Mi unidad\Universidad\Doctorado\Mediciones\Datos shimmer\30-04-2019\orientacion_Session1_idBFED_Calibrated_SD.csv');
+med_imu=cargar_datos_shimmer('G:\Mi unidad\Universidad\Doctorado\Mediciones\Datos shimmer\30-04-2019\orientacion_Session1_idBFED_Calibrated_SD.csv','BFED');
 med_cam.Rigid_Body.RigidBody.Rotation=-[med_cam.Rigid_Body.RigidBody.Rotation(:,4), med_cam.Rigid_Body.RigidBody.Rotation(:,1:3)];
 %med_cam.Rigid_Body.RigidBody.Rotation=-med_cam.Rigid_Body.RigidBody.Rotation;
 %%
