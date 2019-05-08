@@ -1,5 +1,12 @@
+% function [med_imu_s]= sincronizar_imus(med_cam,med_imu,init_)
+%
 % Funcion que sincroniza las mediciones de los imu, respecto a los tiempos
-% y frecuencias de la camara.
+% y frecuencias de la camara. 
+%
+% Ej: [med_imu_s]= sincronizar_imus(med_cam,{med_imu1,med_imu2,med_imu3},1000)
+%
+% init_: retardo entre las medidas de las camaras y de los imus tras el
+% remuestreo.
 
 
 function [med_imu_s]= sincronizar_imus(med_cam,med_imu,init_)
@@ -8,6 +15,8 @@ function [med_imu_s]= sincronizar_imus(med_cam,med_imu,init_)
     % variables
     num_imus= length(med_imu);
     clear nombres_imus;
+    
+   
     if (nargin<3)
          for n=1:num_imus
             init(n)=1;
@@ -31,8 +40,6 @@ function [med_imu_s]= sincronizar_imus(med_cam,med_imu,init_)
            end
         end 
         
-%         m{n}=med_imu{n}.Quat(1,:)-med_imu_s{n}.Quat(1,:);
-%         med_imu_s{n}.Quat=med_imu_s{n}.Quat+m{n};
         med_imu_s{n}.tiempo=TS.Time(init(n):end,:);
         
     end
