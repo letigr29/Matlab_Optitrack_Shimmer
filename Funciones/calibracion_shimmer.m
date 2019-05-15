@@ -75,6 +75,7 @@ function [imus_calibrados]= calibracion_shimmer(imus)
     num_imus= length(imus);
   
     for n=1:num_imus 
+        imus_calibrados=imus;
         if imus{n}.Nombre=="BFED" || imus{n}.Nombre=="D54E" || imus{n}.Nombre=="CE9F"
             nom=imus{n}.Nombre;
             imus_calibrados{n}.Accel_LN=(inv(Accel_Low_Noise.(nom).Alignment)*inv(Accel_Low_Noise.(nom).Sensitivity)*(imus{n}.Accel_LN'-Accel_Low_Noise.(nom).Offset))';

@@ -30,14 +30,10 @@ plot_camara_imu_2D(med_cam,med_imu_s);
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Calibracion Sensor y calculo Quat
 
-imus_calibrados=[];
-[imus_calibrados]= calibracion_shimmer(med_imu_s);
-imus_calibrados=med_imu_s;
-imus_calibrados{1}.Quat9DOF=quaternion_9DOF(imus_calibrados{1},100);
+[imus_calibrados]= calibracion_shimmer(med_imu_s)
+quaternion_9DOF(imus_calibrados)
 
-[mcb0,mcb1]=matriz_cambio_base(med_cal,imus_calibrados{1},1,'Shimmer');
-med_imu_s{1}=transformacion_cuaterniones(imus_calibrados{1},mcb0,mcb1)
-plot_camara_imu_2D(med_cam,imus_calibrados);
+
 %%
 SensorMacros = SetEnabledSensorsMacrosClass;    
 configuracion_shimmer('5',100,{SensorMacros.LNACCEL,SensorMacros.GYRO,SensorMacros.MAG,'Quat'})

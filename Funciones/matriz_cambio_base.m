@@ -1,12 +1,12 @@
 % funcion para calcular la matriz de alineacion de med_imu referido a
 % med_cam
 
-function [matriz_ali0,matriz_ali]= matriz_cambio_base(med_cal,m_imu,instante)
+function [matriz_ali0,matriz_ali]= matriz_cambio_base(med_cal,m_imu,instante,nombre)
 
    
-p1=med_cal.Rigid_Body_Marker.RigidBody_Marker1.Position;
-p2=med_cal.Rigid_Body_Marker.RigidBody_Marker2.Position;
-p3=med_cal.Rigid_Body_Marker.RigidBody_Marker3.Position;  
+p1=med_cal.Rigid_Body_Marker.(strcat(nombre,'_Marker1')).Position;
+p2=med_cal.Rigid_Body_Marker.(strcat(nombre,'_Marker2')).Position;
+p3=med_cal.Rigid_Body_Marker.(strcat(nombre,'_Marker3')).Position;  
 
 P1=mean(p1);
 P2=mean(p2);
