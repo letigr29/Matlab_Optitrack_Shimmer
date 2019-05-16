@@ -10,6 +10,27 @@
             
             accelCalibratedData=med_imu.Accel_LN;
             gyroCalibratedData=med_imu.Gyro;
+            
+            
+            
+            % Based on the theory outlined by Ferraris F, Grimaldi U, and Parvis M.
+            % in "Procedure for effortless in-field calibration of three-axis rate gyros and accelerometers" Sens. Mater. 1995; 7: 311-30.
+            % For a multiple samples of 3 axis data......
+            % C = [R^(-1)] .[K^(-1)] .([U]-[B])
+            
+            %where.....
+            %[C] -> [3 x n] Calibrated Data Matrix
+            %[U] -> [3 x n] Uncalibrated Data Matrix
+            %[B] ->  [3 x n] Offset Vector Matrix
+            %[R] -> [3x3] Alignment Matrix
+            %[K] -> [3x3] Sensitivity Matrix
+            %n = Number of Samples
+%             CalibratedData=((R^-1)*(K^-1)*(UncalibratedData'-B*ones(1,length(UncalibratedData(:,1)))))';
+%             
+%             
+%             
+            
+            
             magCalibratedData=med_imu.Mag;
             
             numSamples = size(accelCalibratedData,1);
@@ -23,7 +44,7 @@
                 accelNormalised = accelCalibratedData./repmat(accelMagnitude,1,3);
                 magNormalised = magCalibratedData./repmat(magMagnitude,1,3);
                 
-                previousQuaternion = [0.5, 0.5, 0.5, 0.5];
+                previousQuaternion = [0.5,0.5,0.5,0.5];
                 
                 iSample = 1;
                 

@@ -1,4 +1,4 @@
- function quaternionData = quaternion_9DOF(med_imu)
+ function quaternionData = quaternion_9DOF(med_imu,freq)
  
             % Updates quaternion data based on accelerometer, gyroscope and
             % magnetometer data inputs: accelCalibratedData,
@@ -39,8 +39,8 @@
                     mx = magNormalised(iSample,1);
                     my = magNormalised(iSample,2);
                     mz = magNormalised(iSample,3);
-                    gx = gyroCalibratedData(iSample,1)/180*pi;
-                    gy = gyroCalibratedData(iSample,2)/180*pi;
+                    gx = gyroCalibratedData(iSample,1);
+                    gy = gyroCalibratedData(iSample,2);
                     gz = gyroCalibratedData(iSample,3)/180*pi;
                     
                     q1q1 = q1*q1;
@@ -107,13 +107,13 @@
                     beta = 0.5;
                     dqdt = dqdt - beta*sNormalised;
                     
-                    tempQuaternion = previousQuaternion + dqdt./thisShimmer.SamplingRate;
+                    tempQuaternion = previousQuaternion + dqdt./freq;
                     quaternionData(iSample, :) = tempQuaternion/(sqrt(sum(tempQuaternion.^2)));
                     
                     previousQuaternion = quaternionData(iSample, :);
-                    thisShimmer.LastQuaternion = previousQuaternion;
                     iSample = iSample + 1;
                 end
+       
             end
             
         end %function updatequaternion

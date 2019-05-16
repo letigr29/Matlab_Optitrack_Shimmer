@@ -31,8 +31,8 @@ function []= plot_camara_imu_2D(med_cam,med_imu,senhales,forma,ejes)
     
     rigid_bodies = fieldnames(med_cam.Rigid_Body);
     rigid_body_markers=fieldnames(med_cam.Rigid_Body_Marker);
-    colores={'r','b','g','m'};
-    estilos={'-','--',':','-.'};
+    colores={'r','b','g','m','r','b','g','m','r','b','g','m','r','b','g','m','r','b','g','m','r','b','g','m','r','b','g','m','r','b','g','m'};
+    estilos={'-','--',':','-.','-','--',':','-.','-','--',':','-.','-','--',':','-.','-','--',':','-.','-','--',':','-.','-','--',':','-.'};
     
     datos=med_cam;
     for i=1:length(nombres_imus)
@@ -79,21 +79,15 @@ function []= plot_camara_imu_2D(med_cam,med_imu,senhales,forma,ejes)
             dato=datos.(split_dot{1}).(split_dot{2}).(split_dot{3});
             if items_2D_selec(i) && isnumeric(dato)
                 for l=1:size(dato,2)
-                    plot(ax_2D,dato(:,l),'Color',colores{color},'LineWidth',2,'LineStyle',estilos{estilo})
-
-                    hold(ax_2D,'on')
-                    leg{end+1}=strcat(items_2D{i},'.',num2str(l));
-
-                    color=color+1;
-                    if color>length(colores)
-                        color=1;
-                    end
+                plot(ax_2D,dato(:,l),'Color',colores{color},'LineWidth',2,'LineStyle',estilos{estilo})
+                color=color+1;
+                if color>=length(colores)
+                    color=1
+                hold(ax_2D,'on')
+                leg{end+1}=strcat(items_2D{i},'.',num2str(l));
                 end
 %                 color=color+1;
                 estilo=estilo+1;
-                if estilo>length(estilos)
-                    estilo=1;
-                end
             end
         end
 
