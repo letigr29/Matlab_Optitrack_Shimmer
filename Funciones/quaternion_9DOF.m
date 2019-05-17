@@ -40,12 +40,12 @@
             accelMagnitude = sqrt(sum(accelCalibratedData.^2,2));
             magMagnitude = sqrt(sum(magCalibratedData.^2,2));
             
-            if(min(accelMagnitude) ~= 0 && min(magMagnitude) ~= 0)
+            if (min(accelMagnitude) ~= 0 && min(magMagnitude) ~= 0)
                 accelNormalised = accelCalibratedData./repmat(accelMagnitude,1,3);
                 magNormalised = magCalibratedData./repmat(magMagnitude,1,3);
                 
                 previousQuaternion = [0.5,0.5,0.5,0.5];
-                
+%                 previousQuaternion = [1,0,0,0];
                 iSample = 1;
                 
                 while(iSample <= numSamples)

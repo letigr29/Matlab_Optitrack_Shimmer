@@ -1,4 +1,4 @@
- function quaternionData = quaternion_9DOF(med_imu,freq)
+ function quaternionData = quaternion_6DOF(med_imu,freq)
  
             % Updates quaternion data based on accelerometer, gyroscope and
             % magnetometer data inputs: accelCalibratedData,
@@ -10,21 +10,19 @@
             
             accelCalibratedData=med_imu.Accel_LN;
             gyroCalibratedData=med_imu.Gyro;
-            magCalibratedData=med_imu.Mag;
+
             
             numSamples = size(accelCalibratedData,1);
             quaternionData = zeros(numSamples,4);
             
             % Normalise accelerometer and magnetometer data.
             accelMagnitude = sqrt(sum(accelCalibratedData.^2,2));
-            magMagnitude = sqrt(sum(magCalibratedData.^2,2));
             
-            if(min(accelMagnitude) ~= 0 && min(magMagnitude) ~= 0)
+            if (min(accelMagnitude) ~= 0)
                 accelNormalised = accelCalibratedData./repmat(accelMagnitude,1,3);
-                magNormalised = magCalibratedData./repmat(magMagnitude,1,3);
                 
+%                 previousQuaternion = [0.5,0.5,0.5,0.5];
                 previousQuaternion = [1,0,0,0];
-                
                 iSample = 1;
                 
                 while(iSample <= numSamples)
@@ -36,11 +34,8 @@
                     ax = accelNormalised(iSample,1);
                     ay = accelNormalised(iSample,2);
                     az = accelNormalised(iSample,3);
-                    mx = magNormalised(iSample,1);
-                    my = magNormalised(iSample,2);
-                    mz = magNormalised(iSample,3);
-                    gx = gyroCalibratedData(iSample,1);
-                    gy = gyroCalibratedData(iSample,2);
+                    gx = gyroCalibratedData(iSample,1)/180*pi;
+                    gy = gyroCalibratedData(iSample,2)/180*pi;
                     gz = gyroCalibratedData(iSample,3)/180*pi;
                     
                     q1q1 = q1*q1;
@@ -60,40 +55,28 @@
                     q2q4 = q2*q4;
                     q3q4 = q3*q4;
                     
-                    % Calculate reference direction of Earth's magnetic
-                    % field.
-                    hx = mx*(q1q1 + q2q2 - q3q3-q4q4) + 2*my*(q2q3 - q1q4) + 2*mz*(q2q4 + q1q3);
-                    hy = 2*mx*(q1q4 + q2q3) + my*(q1q1 - q2q2 + q3q3 - q4q4) * 2*mz*(q3q4 - q1q2);
-                    twobx = sqrt(hx^2 + hy^2); % horizontal component
-                    twobz = 2*mx*(q2q4 - q1q3) + 2*my*(q1q2 + q3q4) + mz*(q1q1 - q2q2 - q3q3 + q4q4); % vertical component
+%                     % Calculate reference direction of Earth's magnetic
+%                     % field.
+%                     hx = mx*(q1q1 + q2q2 - q3q3-q4q4) + 2*my*(q2q3 - q1q4) + 2*mz*(q2q4 + q1q3);
+%                     hy = 2*mx*(q1q4 + q2q3) + my*(q1q1 - q2q2 + q3q3 - q4q4) * 2*mz*(q3q4 - q1q2);
+%                     twobx = sqrt(hx^2 + hy^2); % horizontal component
+%                     twobz = 2*mx*(q2q4 - q1q3) + 2*my*(q1q2 + q3q4) + mz*(q1q1 - q2q2 - q3q3 + q4q4); % vertical component
                     
                     % Calculate corrective step for gradient descent
                     % algorithm.
                     s1 = -twoq3 * (2*(q2q4 - q1q3) - ax) + ...
-                        twoq2*(2*(q1q2 + q3q4) - ay) - ...
-                        twobz*q3*(twobx*(0.5 - q3q3 - q4q4) + twobz*(q2q4 - q1q3) - mx) + ...
-                        (-twobx*q4 + twobz*q2)*(twobx*(q2q3 - q1q4) + twobz*(q1q2 + q3q4) - my) + ...
-                        twobx*q3*(twobx*(q1q3 + q2q4) + twobz*(0.5 - q2q2 - q3q3) - mz);
+                        twoq2*(2*(q1q2 + q3q4) - ay);
                     
                     s2 = twoq4*(2*(q2q4 - q1q3) - ax) + ...
                         twoq1*(2*(q1q2 + q3q4) - ay) - ...
-                        4*q2*(1 - 2*(q2q2 + q3q3) - az) + ...
-                        twobz*q4*(twobx*(0.5 - q3q3 - q4q4) + twobz*(q2q4 - q1q3) - mx) + ...
-                        (twobx*q3 + twobz*q1)*(twobx*(q2q3 - q1q4) + twobz*(q1q2 + q3q4) - my) + ...
-                        (twobx*q4 - twobz*twoq2)*(twobx*(q1q3 + q2q4) + twobz*(0.5 - q2q2 - q3q3) - mz);
+                        4*q2*(1 - 2*(q2q2 + q3q3) - az);
                     
                     s3 = -twoq1*(2*(q2q4 - q1q3) - ax) + ...
                         twoq4*(2*(q1q2 + q3q4) - ay) - ...
-                        4*q3*(1 - 2*(q2q2 + q3q3) - az) + ...
-                        (-twobx*twoq3 - twobz*q1)*(twobx*(0.5 - q3q3 - q4q4) + twobz*(q2q4 - q1q3) - mx) + ...
-                        (twobx * q2 + twobz * q4)*(twobx*(q2q3 - q1q4) + twobz*(q1q2 + q3q4) - my) + ...
-                        (twobx * q1 - twobz*twoq3)*(twobx*(q1q3 + q2q4) + twobz*(0.5 - q2q2 - q3q3) - mz);
+                        4*q3*(1 - 2*(q2q2 + q3q3) - az);
                     
                     s4 = twoq2 * (2.0 * (q2q4 - q1q3) - ax) + ...
-                        twoq3 * (2*(q1q2 + q3q4) - ay) + ...
-                        (-twobx * twoq4 + twobz * q2) * (twobx * (0.5 - q3q3 - q4q4) + twobz * (q2q4 - q1q3) - mx) + ...
-                        (-twobx * q1 + twobz * q3) * (twobx * (q2q3 - q1q4) + twobz * (q1q2 + q3q4) - my) + ...
-                        twobx * q2 * (twobx * (q1q3 + q2q4) + twobz * (0.5 - q2q2 - q3q3) - mz);
+                        twoq3 * (2*(q1q2 + q3q4) - ay);
                     
                     sNormalised = [s1, s2, s3, s4]/sqrt(sum([s1 s2 s3 s4].^2));
                     

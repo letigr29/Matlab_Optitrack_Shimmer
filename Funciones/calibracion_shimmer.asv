@@ -100,18 +100,20 @@ function [imus_calibrados]= calibracion_shimmer(imus)
         if imus{n}.Nombre=="BFED" || imus{n}.Nombre=="D54E" || imus{n}.Nombre=="CE9F"
             nom=imus{n}.Nombre;
             
-            imus_calibrados{n}.Accel_LN=(Accel_Low_Noise.Alignment*Accel_Low_Noise.Sensitivity*imus{n}.Accel_LN'+Accel_Low_Noise.Offset)';
+            imus_calibrados{n}.Accel_LN=(Accel_Low_Noise.Sensitivity*Accel_Low_Noise.Alignment*imus{n}.Accel_LN'+Accel_Low_Noise.Offset)';
             imus_calibrados{n}.Accel_LN=(inv(Accel_Low_Noise.(nom).Alignment)*inv(Accel_Low_Noise.(nom).Sensitivity)*(imus_calibrados{n}.Accel_LN'-Accel_Low_Noise.(nom).Offset))';
             
-            imus_calibrados{n}.Accel_WR=(Accel_Wide_Noise.g2.Alignment*(Accel_Wide_Noise.g2.Sensitivity)*imus{n}.Accel_WR'+Accel_Wide_Noise.g2.Offset)';
+            imus_calibrados{n}.Accel_WR=(Accel_Wide_Noise.g2.Sensitivity*(Accel_Wide_Noise.g2.Alignment)*imus{n}.Accel_WR'+Accel_Wide_Noise.g2.Offset)';
             imus_calibrados{n}.Accel_WR=(inv(Accel_Wide_Noise.g2.(nom).Alignment)*inv(Accel_Wide_Noise.g2.(nom).Sensitivity)*(imus_calibrados{n}.Accel_WR'-Accel_Wide_Noise.g2.(nom).Offset))';
             
-            imus_calibrados{n}.Gyro=(Gyroscope.dps500*(Gyroscope.dps500.Alignment.Sensitivity)*imus{n}.Gyro'+Gyroscope.dps500.Offset)';
+            imus_calibrados{n}.Gyro=(Gyroscope.dps500.Sensitivity*(Gyroscope.dps500.Alignment)*imus{n}.Gyro'+Gyroscope.dps500.Offset)';
             imus_calibrados{n}.Gyro=(inv(Gyroscope.dps500.(nom).Alignment)*inv(Gyroscope.dps500.(nom).Sensitivity)*(imus_calibrados{n}.Gyro'-Gyroscope.dps500.(nom).Offset))';
             
             imus_calibrados{n}.Mag=(Magnetometer.Ga1_3.Sensitivity*(Magnetometer.Ga1_3.Alignment)*imus{n}.Mag'+Magnetometer.Ga1_3.Offset)';
             imus_calibrados{n}.Mag=(inv(Magnetometer.Ga1_3.(nom).Alignment)*inv(Magnetometer.Ga1_3.(nom).Sensitivity)*(imus_calibrados{n}.Mag'-Magnetometer.Ga1_3.(nom).Offset))';
-        
+%             imus_calibrados{n}.Mag =  imus{n}.Mag;
+
+            imus_calibrados{n}.Nombre=strcat(imu_calibrados.Nombre,'_c');
         else
            
             imus_calibrados{n}.Accel_LN = imus{n}.Accel_LN ;

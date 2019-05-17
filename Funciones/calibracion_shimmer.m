@@ -111,7 +111,9 @@ function [imus_calibrados]= calibracion_shimmer(imus)
             
             imus_calibrados{n}.Mag=(Magnetometer.Ga1_3.Sensitivity*(Magnetometer.Ga1_3.Alignment)*imus{n}.Mag'+Magnetometer.Ga1_3.Offset)';
             imus_calibrados{n}.Mag=(inv(Magnetometer.Ga1_3.(nom).Alignment)*inv(Magnetometer.Ga1_3.(nom).Sensitivity)*(imus_calibrados{n}.Mag'-Magnetometer.Ga1_3.(nom).Offset))';
-        
+%             imus_calibrados{n}.Mag =  imus{n}.Mag;
+
+            imus_calibrados{n}.Nombre=strcat(imus_calibrados{n}.Nombre,'_c');
         else
            
             imus_calibrados{n}.Accel_LN = imus{n}.Accel_LN ;
