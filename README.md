@@ -1,39 +1,32 @@
 
--SimurTools-
-============
+SimurTools
+==========
 
-Herramientas del laboratorio SiMuR para la captación y análisis del movimiento humano.
+Herramientas del laboratorio SiMuR para la captaciÃ³n y anÃ¡lisis del movimiento humano.
 
 
-
-Cálculos sobre la orientacion
+Funciones:
 ----------------------------------
 
-transformacion_cuaterniones     hace no se que
-quaternion_9DOF                 hace no se cual
-...
+## CÃ¡lculos sobre la orientacion
+
+* `transformacion_cuaterniones`: hace no se que
+* `quaternion_9DOF` :            hace no se cual
 
 
+## RepresentaciÃ³n grÃ¡fica 
 
-Representación gráfica 
-----------------------
-
-transformacion_cuaterniones     hace no se que
-quaternion_9DOF                 hace no se cual
-...
+* `transformacion_cuaterniones`: hace no se que
+* `quaternion_9DOF` :            hace no se cual
 
 
-Manejo de archivos 
-------------------
+## Manejo de archivos 
 
-leer_shimmer                    hace no se que
-quaternion_9DOF                 hace no se cual
-...
+* `transformacion_cuaterniones`: hace no se que
+* `quaternion_9DOF` :            hace no se cual
 
 
-Manejo de sensores en tiempo real 
----------------------------------
+## Manejo de sensores en tiempo real 
 
-leer_shimmer                    hace no se que
-quaternion_9DOF                 hace no se cual
-...
+* `transformacion_cuaterniones`: hace no se que
+* `quaternion_9DOF` :            hace no se cual
