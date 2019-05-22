@@ -34,8 +34,8 @@ function [imus_calibrados]= calibracion_shimmer(imus)
     Gyroscope.dps500.BFED.Sensitivity=[49.03,0,0;0,62.98,0;0,0,51.15];
     Gyroscope.dps500.BFED.Alignment=[0.01,-1,0.01;-1,0,0;0,-0.02,-1];
     
-    Magnetometer.Ga1_3.BFED.Offset=[-804;405;-400];
-    Magnetometer.Ga1_3.BFED.Sensitivity=[707,0,0;0,736,0;0,0,620];
+    Magnetometer.Ga1_3.BFED.Offset=[-2;610;-146];
+    Magnetometer.Ga1_3.BFED.Sensitivity=[1232,0,0;0,1184,0;0,0,1103];
     Magnetometer.Ga1_3.BFED.Alignment=[-1,0,0;0,1,0;0,0,-1];
     
     
@@ -109,9 +109,9 @@ function [imus_calibrados]= calibracion_shimmer(imus)
             imus_calibrados{n}.Gyro=(Gyroscope.dps500.Sensitivity*(Gyroscope.dps500.Alignment)*imus{n}.Gyro'+Gyroscope.dps500.Offset)';
             imus_calibrados{n}.Gyro=(inv(Gyroscope.dps500.(nom).Alignment)*inv(Gyroscope.dps500.(nom).Sensitivity)*(imus_calibrados{n}.Gyro'-Gyroscope.dps500.(nom).Offset))';
             
-            imus_calibrados{n}.Mag=(Magnetometer.Ga1_3.Sensitivity*(Magnetometer.Ga1_3.Alignment)*imus{n}.Mag'+Magnetometer.Ga1_3.Offset)';
-            imus_calibrados{n}.Mag=(inv(Magnetometer.Ga1_3.(nom).Alignment)*inv(Magnetometer.Ga1_3.(nom).Sensitivity)*(imus_calibrados{n}.Mag'-Magnetometer.Ga1_3.(nom).Offset))';
-%             imus_calibrados{n}.Mag =  imus{n}.Mag;
+%             imus_calibrados{n}.Mag=(Magnetometer.Ga1_3.Sensitivity*(Magnetometer.Ga1_3.Alignment)*imus{n}.Mag'+Magnetometer.Ga1_3.Offset)';
+%             imus_calibrados{n}.Mag=(inv(Magnetometer.Ga1_3.(nom).Alignment)*inv(Magnetometer.Ga1_3.(nom).Sensitivity)*(imus_calibrados{n}.Mag'-Magnetometer.Ga1_3.(nom).Offset))';
+            imus_calibrados{n}.Mag =  imus{n}.Mag;
 
             imus_calibrados{n}.Nombre=strcat(imus_calibrados{n}.Nombre,'_c');
         else

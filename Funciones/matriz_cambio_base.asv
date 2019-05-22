@@ -57,7 +57,7 @@ bx=bx/norm(bx);
 by=by/norm(by);
 bz=bz/norm(bz);
 
-matriz_ali0=[bx',by',bz']*desviacion;
+matriz_ali0=[bx',by',bz']*desvi;
 
 matriz_ali=(matriz_ali0)*(quat2dcm(m_imu.Quat(instante,:)))';
 end
